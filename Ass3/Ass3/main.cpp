@@ -7,6 +7,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 class Polynomial
 {
     double *arr;
@@ -19,21 +21,23 @@ public:
 //    Polynomial(double, double, double, double );
     Polynomial(const Polynomial&);
     void operator+(const Polynomial &);
-    void Pol_set(int place, double coefficient);
+    void operator=(const Polynomial &);
+    void set(int exponent, double coefficient);
+    void get();
     ~Polynomial();
 };
 Polynomial::Polynomial()
 {
-    double *arr = new double[3];
+    arr = new double[3];
     arr[0] = 1;
     arr[1] = 2;
     arr[2] = 1;
 }
-Polynomial :: Polynomial(int size)
+Polynomial :: Polynomial(int exponent)
 {
-    del_size = size;
-    double *arr = new double[size];
-    for (int i = 0; i < size; i++)
+    del_size = exponent + 1;
+    arr = new double[exponent + 1];
+    for (int i = 0; i < (exponent + 1); i++)
     {
         arr[i] = 0;
     }
@@ -41,10 +45,15 @@ Polynomial :: Polynomial(int size)
 Polynomial::Polynomial(const Polynomial&y)
 {
     //create dynamic variable
-    //make a deep copy
-    
+    //make a deep copy done!
+    double *arr = new double[10];
+    *arr = *(y.arr);
 }
 void Polynomial::operator+(const Polynomial & RightSide)
+{
+    
+}
+void Polynomial::operator=(const Polynomial & RightSide)
 {
     
 }
@@ -56,10 +65,24 @@ Polynomial::~Polynomial()
 //    }
     delete []arr;
 }
+void Polynomial::set(int exponent, double coefficient)
+{
+    arr[exponent] = coefficient;
+}
+void Polynomial::get()
+{
+    cout << arr[0];
+}
 
 int main(int argc, const char * argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
     Polynomial a(4);
+    a.set(1,2);
+    a.set(0,1);
+    a.set(2,2);
+    a.set(3,3);
+    a.set(4,5);
+    a.get();
     return 0;
 }
