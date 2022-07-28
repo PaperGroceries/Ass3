@@ -12,6 +12,7 @@ using namespace std;
 class Polynomial
 {
     double *arr;
+    double *sum;
     int del_size;
 public:
     Polynomial();
@@ -20,7 +21,8 @@ public:
 //    Polynomial(double, double, double );
 //    Polynomial(double, double, double, double );
     Polynomial(const Polynomial&);
-    void operator+(const Polynomial &);
+    double operator+(const Polynomial &);
+    void operator*(const Polynomial &);
     void operator=(const Polynomial &);
     void set(int exponent, double coefficient);
     void get();
@@ -46,12 +48,21 @@ Polynomial::Polynomial(const Polynomial&y)
 {
     //create dynamic variable
     //make a deep copy done!
-    double *arr = new double[10];
+    arr = new double[10];
     *arr = *(y.arr);
 }
-void Polynomial::operator+(const Polynomial & RightSide)
+double Polynomial::operator+(const Polynomial & RightSide)
 {
-    
+    sum = new double[10];
+    for(int i = 0; i < 10; i++)
+    {
+        sum[i] = arr[i] + RightSide.arr[i];
+    }
+    return *sum;
+}
+void Polynomial::operator*(const Polynomial & RightSide)
+{
+    //double for loop to make mupltiplication and then sum the products
 }
 void Polynomial::operator=(const Polynomial & RightSide)
 {
@@ -72,10 +83,11 @@ void Polynomial::set(int exponent, double coefficient)
 void Polynomial::get()
 {
     cout << arr[0];
+    //make actual get with x and  make it empty if index is 0
 }
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
+    // i need to find a way to transfer the size of the array
     std::cout << "Hello, World!\n";
     Polynomial a(4);
     a.set(1,2);
