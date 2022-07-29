@@ -32,9 +32,10 @@ public:
 Polynomial::Polynomial()
 {
     arr = new double[10];
-    arr[0] = 1;
-    arr[1] = 2;
-    arr[2] = 1;
+    for (int i = 0; i < 10; i++)
+    {
+        arr[i] = 0;
+    }
 }
 Polynomial :: Polynomial(int exponent)
 {
@@ -85,7 +86,9 @@ Polynomial::Polynomial(const Polynomial&y)
 Polynomial operator*(const Polynomial& LeftSide, const Polynomial & RightSide)
 {
     Polynomial product;
-    product.del_size = LeftSide.del_size + RightSide.del_size;
+    //the problem was we intialized values to preexisting values and added the result to it
+    //add delete to makes sure the values are clean
+    product.del_size = LeftSide.del_size + RightSide.del_size - 1;
     for (int i = 0; i < RightSide.del_size ; i++)
         //del_size wont work here say x^3 *x^3 we get max x^6
     {
@@ -131,11 +134,11 @@ void Polynomial::get()
         }
         else if ( i == 0 && !(arr[i] == 0))
         {
-            cout << arr[i] << endl;
+            cout << arr[i ] << endl;
         }
         else if (!(arr[i] == 0))
         {
-            cout << arr[i] << "x^" << i-1 << " ";
+            cout << arr[i ] << "x^" << i << " ";
         }
 
 //        for (int k + 0; k < i; k++)
@@ -149,7 +152,7 @@ void Polynomial::get()
 int main() {
     // i need to find a way to transfer the size of the array
     Polynomial a(4);
-    Polynomial b(4);
+    Polynomial b(2);
     Polynomial c;
     Polynomial k;
     a.set(1,2);
@@ -159,9 +162,9 @@ int main() {
     a.set(4,5);
     b.set(1,2);
     b.set(0,1);
-    b.set(2,4);
-    b.set(3,2);
-    b.set(4,6);
+//    b.set(2,4);
+//    b.set(3,2);
+//    b.set(4,6);
     a.get();
     cout  << "+" <<endl;
     b.get();
