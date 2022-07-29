@@ -23,7 +23,7 @@ public:
 //    Polynomial(double, double, double, double );
     Polynomial(const Polynomial&);
     friend Polynomial operator+(const Polynomial &,const Polynomial &);
-    void operator*(const Polynomial &);
+    friend Polynomial operator*(const Polynomial &,const Polynomial &);
     void operator=(const Polynomial &);
     void set(int exponent, double coefficient);
     void get();
@@ -38,7 +38,7 @@ Polynomial::Polynomial()
 }
 Polynomial :: Polynomial(int exponent)
 {
-    del_size = exponent +1;
+    del_size = exponent + 1;
     arr = new double[exponent +1];
     for (int i = 0; i < (exponent + 1); i++)
     {
@@ -82,14 +82,23 @@ Polynomial::Polynomial(const Polynomial&y)
 //    }
     return sum;
     }
-void Polynomial::operator*(const Polynomial & RightSide)
+Polynomial operator*(const Polynomial& LeftSide, const Polynomial & RightSide)
 {
     Polynomial product;
-//    for (int i = 0; i < sum.del_size ; i++)
-//    {
-//
-//    }
+    product.del_size = LeftSide.del_size + RightSide.del_size;
+    for (int i = 0; i < RightSide.del_size ; i++)
+        //del_size wont work here say x^3 *x^3 we get max x^6
+    {
+//        product.arr[i]= RightSide.arr[i];
+        for (int k = 0; k < LeftSide.del_size; k++ )
+        {
+            product.arr[k+i] += (LeftSide.arr[k] * RightSide.arr[i]);
+            // need to make sure the products shift
+            //then add those products
+        }
+    }
     //double for loop to make mupltiplication and then sum the products
+    return product;
 }
 void Polynomial::operator=(const Polynomial & RightSide)
 {
@@ -97,6 +106,7 @@ void Polynomial::operator=(const Polynomial & RightSide)
     {
         arr[i] = RightSide.arr[i];
     }
+    del_size = RightSide.del_size;
 }
 Polynomial::~Polynomial()
 {
@@ -113,15 +123,19 @@ void Polynomial::set(int exponent, double coefficient)
 void Polynomial::get()
 {
 //    cout << arr[0];
-    for (int i = 5 - 1; i >= 0; i--)
+    for (int i = del_size - 1; i >= 0; i--)
     {
-        if (i == 0 && !(arr[i] == 0))
+        if (i == 1 && !(arr[i] == 0))
         {
-            cout << arr[i] << "x" << endl;
+            cout << arr[i] << "x ";
+        }
+        else if ( i == 0 && !(arr[i] == 0))
+        {
+            cout << arr[i] << endl;
         }
         else if (!(arr[i] == 0))
         {
-            cout << arr[i] << "x^" << i << " ";
+            cout << arr[i] << "x^" << i-1 << " ";
         }
 
 //        for (int k + 0; k < i; k++)
@@ -137,6 +151,7 @@ int main() {
     Polynomial a(4);
     Polynomial b(4);
     Polynomial c;
+    Polynomial k;
     a.set(1,2);
     a.set(0,1);
     a.set(2,2);
@@ -150,8 +165,9 @@ int main() {
     a.get();
     cout  << "+" <<endl;
     b.get();
-    c = (a + b);
-    c.get();
-    
+//    c = (a + b);
+//    c.get();
+    k = (a * b);
+    k.get();
     return 0;
 }
