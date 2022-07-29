@@ -24,6 +24,7 @@ public:
     Polynomial(const Polynomial&);
     friend Polynomial operator+(const Polynomial &,const Polynomial &);
     friend Polynomial operator*(const Polynomial &,const Polynomial &);
+    friend Polynomial operator-(const Polynomial &,const Polynomial &);
     void operator=(const Polynomial &);
     void set(int exponent, double coefficient);
     void get();
@@ -50,10 +51,10 @@ Polynomial::Polynomial(const Polynomial&y)
 {
     //create dynamic variable
     //make a deep copy
-    arr = new double[del_size];
+    arr = new double[y.del_size];
 //    *arr = *(y.arr);
     
-    for (int i = 0; i < del_size; i++)
+    for (int i = 0; i < y.del_size; i++)
     {
         arr[i] = y.arr[i];
     }
@@ -76,6 +77,7 @@ Polynomial::Polynomial(const Polynomial&y)
      {
          sum.arr[i] = LeftSide.arr[i] + RightSide.arr[i];
      }
+     //if 0 + unintialized it creates a mess
      
 //    for(int i = 0; i < 10; i++)
 //    {
@@ -86,6 +88,8 @@ Polynomial::Polynomial(const Polynomial&y)
 Polynomial operator*(const Polynomial& LeftSide, const Polynomial & RightSide)
 {
     Polynomial product;
+//    int da[10] = LeftSide.arr;
+//    for( i = 0)
     //the problem was we intialized values to preexisting values and added the result to it
     //add delete to makes sure the values are clean
     product.del_size = LeftSide.del_size + RightSide.del_size - 1;
@@ -103,8 +107,31 @@ Polynomial operator*(const Polynomial& LeftSide, const Polynomial & RightSide)
     //double for loop to make mupltiplication and then sum the products
     return product;
 }
+Polynomial operator-(const Polynomial & LeftSide,const Polynomial & RightSide)
+{
+    Polynomial difference;
+//    int small;
+    if(LeftSide.del_size >= RightSide.del_size)
+    {
+        difference.del_size = LeftSide.del_size;
+//        small = RightSide.del_size;
+    }
+//    sum = new double[10];
+    else if (RightSide.del_size > LeftSide.del_size)
+    {
+        difference.del_size = RightSide.del_size;
+//        small = LeftSide.del_size;
+    }
+     for (int i = 0; i < difference.del_size  ; i++)
+     {
+         
+         difference.arr[i] = LeftSide.arr[i] - RightSide.arr[i];
+     }
+    return difference;
+}
 void Polynomial::operator=(const Polynomial & RightSide)
 {
+   
     for( int i = 0; i < RightSide.del_size; i++)
     {
         arr[i] = RightSide.arr[i];
@@ -155,10 +182,11 @@ int main() {
     Polynomial b(2);
     Polynomial c;
     Polynomial k;
+    Polynomial l;
     a.set(1,2);
     a.set(0,1);
     a.set(2,2);
-    a.set(3,0);
+    a.set(3,1);
     a.set(4,5);
     b.set(1,2);
     b.set(0,1);
@@ -168,9 +196,17 @@ int main() {
     a.get();
     cout  << "+" <<endl;
     b.get();
-//    c = (a + b);
-//    c.get();
+    l = (a - b);
+    l.get();
+    cout << endl;
+    c = (a + b);
+    c.get();
+    l = (a - b);
+    l.get();
+    cout << endl;
     k = (a * b);
     k.get();
+   
+    // the values are being changes for some reason
     return 0;
 }

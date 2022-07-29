@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "operator-(Polynomial const&amp;, Polynomial const&amp;):main.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "((double(&amp;)[10]) *arr">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Polynomial::Polynomial():main.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "(double(&amp;)[10]) *arr">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "operator*(Polynomial const&amp;, Polynomial const&amp;):main.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "main:main.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "((double(&amp;)[10]) *arr">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "operator+(Polynomial const&amp;, Polynomial const&amp;):main.cpp">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
