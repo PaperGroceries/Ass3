@@ -19,21 +19,23 @@ public:
     Polynomial();
     Polynomial(int size );
     Polynomial(double, double);
+    Polynomial(double constant);
 //    Polynomial(double, double, double );
 //    Polynomial(double, double, double, double );
     Polynomial(const Polynomial&);
     friend Polynomial operator+(const Polynomial &,const Polynomial &);
     friend Polynomial operator*(const Polynomial &,const Polynomial &);
     friend Polynomial operator-(const Polynomial &,const Polynomial &);
-    void operator=(const Polynomial &);
+    void operator=(const Polynomial );
     void set(int exponent, double coefficient);
     void get();
+    double get_coef(int exponent);
     ~Polynomial();
 };
 Polynomial::Polynomial()
 {
-    arr = new double[10];
-    for (int i = 0; i < 10; i++)
+    arr = new double[100];
+    for (int i = 0; i < 100; i++)
     {
         arr[i] = 0;
     }
@@ -41,7 +43,7 @@ Polynomial::Polynomial()
 Polynomial :: Polynomial(int exponent)
 {
     del_size = exponent + 1;
-    arr = new double[exponent +1];
+    arr = new double[exponent + 1];
     for (int i = 0; i < (exponent + 1); i++)
     {
         arr[i] = 0;
@@ -60,6 +62,12 @@ Polynomial::Polynomial(const Polynomial&y)
     }
     
 }
+Polynomial::Polynomial(double constant)
+{
+    del_size = 1;
+    arr = new double[1];
+    arr[0] = constant;
+}
  Polynomial operator+(const Polynomial & LeftSide,const Polynomial & RightSide)
 {
     Polynomial sum;
@@ -73,16 +81,26 @@ Polynomial::Polynomial(const Polynomial&y)
     {
         sum.del_size = RightSide.del_size;
     }
-     for (int i = 0; i < sum.del_size ; i++)
-     {
-         sum.arr[i] = LeftSide.arr[i] + RightSide.arr[i];
-     }
+//     for (int i = 0; i < sum.del_size ; i++)
+//     {
+//         sum.arr[i] = LeftSide.arr[i] + RightSide.arr[i];
+//     }
      //if 0 + unintialized it creates a mess
-     
-//    for(int i = 0; i < 10; i++)
-//    {
-//        sum[i] = arr[i] + RightSide.arr[i];
-//    }
+     for (int i = 0; i < sum.del_size  ; i++)
+     {
+         if(i < RightSide.del_size && i < LeftSide.del_size)
+         {
+             sum.arr[i] = LeftSide.arr[i] + RightSide.arr[i];
+         }
+         else if(i >= RightSide.del_size && i < LeftSide.del_size)
+         {
+             sum.arr[i] = LeftSide.arr[i];
+         }
+         else if(i >= LeftSide.del_size && i < RightSide.del_size)
+         {
+             sum.arr[i] = RightSide.arr[i];
+         }
+     }
     return sum;
     }
 Polynomial operator*(const Polynomial& LeftSide, const Polynomial & RightSide)
@@ -124,12 +142,23 @@ Polynomial operator-(const Polynomial & LeftSide,const Polynomial & RightSide)
     }
      for (int i = 0; i < difference.del_size  ; i++)
      {
-         
-         difference.arr[i] = LeftSide.arr[i] - RightSide.arr[i];
+         if(i < RightSide.del_size && i < LeftSide.del_size)
+         {
+             difference.arr[i] = LeftSide.arr[i] - RightSide.arr[i];
+         }
+         else if(i >= RightSide.del_size && i < LeftSide.del_size)
+         {
+             difference.arr[i] = LeftSide.arr[i];
+         }
+         else if(i >= LeftSide.del_size && i < RightSide.del_size)
+         {
+             difference.arr[i] = -RightSide.arr[i];
+         }
      }
+    
     return difference;
 }
-void Polynomial::operator=(const Polynomial & RightSide)
+void Polynomial::operator=(const Polynomial  RightSide)
 {
    
     for( int i = 0; i < RightSide.del_size; i++)
@@ -175,14 +204,18 @@ void Polynomial::get()
     }
     //make actual get with x and  make it empty if index is 0
 }
+double Polynomial::get_coef(int exponent)
+{
+    return arr[exponent];
+}
+
+// still not sure what evaluate does
 
 int main() {
     // i need to find a way to transfer the size of the array
     Polynomial a(4);
     Polynomial b(2);
-    Polynomial c;
-    Polynomial k;
-    Polynomial l;
+    Polynomial c,k,l,j,constant;
     a.set(1,2);
     a.set(0,1);
     a.set(2,2);
@@ -206,7 +239,25 @@ int main() {
     cout << endl;
     k = (a * b);
     k.get();
-   
+    j = (b - a);
+    j.get();
+    cout << endl;
+    constant = a + 3.3; //works but had to make its for doubles only cus of the way i deisgned my code
+    constant.get();
+    constant = 3.0 + a;
+    constant.get();
+    constant = a - 3.0;
+    constant.get();
+    constant = 3.0 - a;
+    constant.get();
+    constant = a * 3.0;
+    constant.get();
+    constant = -3.0 * a;
+    constant.get();
+    
+   // test right side bigger than left *tested works!
+    
     // the values are being changes for some reason
+    // i think it is crazy simply cuz of uninitialized values *fixed
     return 0;
 }
