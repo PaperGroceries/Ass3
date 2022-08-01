@@ -6,6 +6,7 @@
 //
 
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -30,6 +31,7 @@ public:
     void set(int exponent, double coefficient);
     void get();
     double get_coef(int exponent);
+    double evaluate(double x);
     ~Polynomial();
 };
 Polynomial::Polynomial()
@@ -184,9 +186,19 @@ void Polynomial::get()
 //    cout << arr[0];
     for (int i = del_size - 1; i >= 0; i--)
     {
-        if (i == 1 && !(arr[i] == 0))
+        if (arr[i] == 0)
         {
-            cout << arr[i] << "x ";
+            continue;
+        }
+        else if(i != del_size -1)
+        {
+            cout << " + " ;
+        }
+        
+        
+         if (i == 1 && arr[i] != 0)
+        {
+            cout << arr[i] << "x";
         }
         else if ( i == 0 && !(arr[i] == 0))
         {
@@ -194,9 +206,10 @@ void Polynomial::get()
         }
         else if (!(arr[i] == 0))
         {
-            cout << arr[i ] << "x^" << i << " ";
+            cout << arr[i ] << "x^" << i ;
         }
-
+        
+       
 //        for (int k + 0; k < i; k++)
 //        {
 //            cout << "^"
@@ -209,12 +222,22 @@ double Polynomial::get_coef(int exponent)
     return arr[exponent];
 }
 
+double Polynomial::evaluate(double x)
+{
+    int sum= 0;
+    for ( int i = 0; i <= del_size; i++)
+    {
+        sum += arr[i] * pow(x,i);
+    }
+    return sum;
+}
+
 // still not sure what evaluate does
 
 int main() {
     // i need to find a way to transfer the size of the array
     Polynomial a(4);
-    Polynomial b(2);
+    Polynomial b(1);
     Polynomial c,k,l,j,constant;
     a.set(1,2);
     a.set(0,1);
@@ -227,9 +250,10 @@ int main() {
 //    b.set(3,2);
 //    b.set(4,6);
     a.get();
-    cout  << "+" <<endl;
+    cout  << "and" <<endl;
     b.get();
     l = (a - b);
+    cout<< endl;
     l.get();
     cout << endl;
     c = (a + b);
@@ -254,9 +278,10 @@ int main() {
     constant.get();
     constant = -3.0 * a;
     constant.get();
-    
+    cout << endl << a.get_coef(1) << endl; // 2
+    cout << b.evaluate(2) << endl; // 5
    // test right side bigger than left *tested works!
-    
+    //add +s
     // the values are being changes for some reason
     // i think it is crazy simply cuz of uninitialized values *fixed
     return 0;
