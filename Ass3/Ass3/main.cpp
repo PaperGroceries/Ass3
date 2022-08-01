@@ -225,7 +225,7 @@ double Polynomial::get_coef(int exponent)
 double Polynomial::evaluate(double x)
 {
     int sum= 0;
-    for ( int i = 0; i <= del_size; i++)
+    for ( int i = 0; i < del_size; i++)
     {
         sum += arr[i] * pow(x,i);
     }
@@ -249,36 +249,48 @@ int main() {
 //    b.set(2,4);
 //    b.set(3,2);
 //    b.set(4,6);
+    cout << "a :" << endl;
     a.get();
     cout  << "and" <<endl;
+    cout << "b :" << endl;
     b.get();
-    l = (a - b);
-    cout<< endl;
-    l.get();
+
     cout << endl;
     c = (a + b);
+    cout << "a + b :" << endl;
     c.get();
     l = (a - b);
+    cout << endl << "a - b :" << endl;
     l.get();
     cout << endl;
     k = (a * b);
+    cout << endl << "a * b :" << endl;
     k.get();
     j = (b - a);
+    cout << endl << "b - a :" << endl;
     j.get();
     cout << endl;
     constant = a + 3.3; //works but had to make its for doubles only cus of the way i deisgned my code
+    cout << endl << "a + 3.3 :" << endl;
     constant.get();
-    constant = 3.0 + a;
+    constant = 3 + a;
+    cout << endl << "3 + a :" << endl;
     constant.get();
     constant = a - 3.0;
+    cout << endl << "a - 3 :" << endl;
     constant.get();
     constant = 3.0 - a;
+    cout << endl << "3 - a :" << endl;
     constant.get();
     constant = a * 3.0;
+    cout << endl << "a * 3 :" << endl;
     constant.get();
     constant = -3.0 * a;
+    cout << endl << "-3 * a :" << endl;
     constant.get();
-    cout << endl << a.get_coef(1) << endl; // 2
+    cout << endl << "coefficient of x^1 of a" << endl;
+    cout << a.get_coef(1) << endl; // 2
+    cout << endl << "b evaluated at x = 2" << endl;
     cout << b.evaluate(2) << endl; // 5
    // test right side bigger than left *tested works!
     //add +s
